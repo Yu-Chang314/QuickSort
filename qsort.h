@@ -396,7 +396,7 @@ quick_sort(RandomAccessIterator first,
 {
 	for (;;)
 	{
-        // smallsort is faster for small array.
+        	// smallsort is faster for small array.
 		if (last - first <= SSORT_MAX)
 		{
 		    small_sort(first, last, comp);
@@ -413,14 +413,14 @@ quick_sort(RandomAccessIterator first,
 
 		--depth_limit; // allow 2log2(n) divisions.
 
-        // calculate the approximate median of 3 elements by median of 3 or
-        // recursively from an approximation of each, if they're large enough.
-        // this algorithm is taken from glidesort by Orson Peters.
+       		 // calculate the approximate median of 3 elements by median of 3 or
+       		 // recursively from an approximation of each, if they're large enough.
+       		 // this algorithm is taken from glidesort by Orson Peters.
 		choose_pivot(first, last, comp);
 
-        // if the chosen pivot is equal to the predecessor, we change the strategy,
-        // putting the equal elements in the left partition, greater elements in
-        // the right partition.
+       		 // if the chosen pivot is equal to the predecessor, we change the strategy,
+       		 // putting the equal elements in the left partition, greater elements in
+      		 // the right partition.
 		if (ancestor_pivot && !comp(*ancestor_pivot, *first))
 		{
 			first = partition_by_choosed_pivot(first, last, reverse_predicate{comp});
@@ -430,9 +430,9 @@ quick_sort(RandomAccessIterator first,
 		}
 
 		RandomAccessIterator mid = partition_by_choosed_pivot(first, last, comp);
-        __builtin_assume(mid < last);
-        // sort the left partition first using recursion and do tail recursion elimination for
-        // the right-hand partition.
+       		 __builtin_assume(mid < last);
+       		// sort the left partition first using recursion and do tail recursion elimination for
+		// the right-hand partition.
 		quick_sort(first, mid, comp, depth_limit, ancestor_pivot);
 		ancestor_pivot = std::to_address(mid);
 		first = ++mid;
