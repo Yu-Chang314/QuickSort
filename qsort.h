@@ -318,7 +318,7 @@ bitset_partition(RandomAccessIterator first,
     while (first < last && !comp(*--last, pivot));
     if (first < last) // Is [first, last) already partitioned?
     {
-        std::iter_swap(first, last); // Swap first pair we find above.
+        std::iter_swap(first, last);
         ++first;
         RandomAccessIterator lm1 = last;
         --lm1;
