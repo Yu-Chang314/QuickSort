@@ -213,8 +213,8 @@ insertion_sort(BidirectionalIterator first,
             val(std::move(*mid));
             if (comp(val, *first)) // found new earliest element, move to front
             {
-				std::move_backward(first, mid, ++hole);
-				*first = std::move(val);
+                std::move_backward(first, mid, ++hole);
+                *first = std::move(val);
             }
             else // look for insertion point after first
             {
