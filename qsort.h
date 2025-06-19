@@ -12,7 +12,6 @@ sift_down(RandomAccessIterator first,
           DistanceType node)
 {
     typedef typename std::iterator_traits<RandomAccessIterator>::value_type value_type;
-
     const DistanceType len = last - first;
     __builtin_assume(node < len);
     value_type tmp(std::move(*(first + node)));
@@ -56,10 +55,8 @@ median_of_three(RandomAccessIterator a,
                 RandomAccessIterator c,
                 Compare& comp)
 {
-
     bool x = comp(*a, *b);
     bool y = comp(*a, *c);
-
     // If x=y=0 then b, c <= a. In this case we want to return max(b, c).
     // If x=y=1 then a < b, c. In this case we want to return min(b, c).
     // By toggling the outcome of b < c using XOR x we get this behavior.
@@ -285,7 +282,6 @@ swap_bitmap_pos_within(RandomAccessIterator& first,
                        uint64_t& right_bitset)
 {
     typedef typename std::iterator_traits<RandomAccessIterator>::difference_type difference_type;
-
     if (left_bitset)
     {
         while (left_bitset != 0)
@@ -320,23 +316,18 @@ bitset_partition(RandomAccessIterator first,
     typedef typename std::iterator_traits<RandomAccessIterator>::difference_type difference_type;
     RandomAccessIterator begin = first;
     value_type pivot(std::move(*first));
-
     while (++first < last && comp(*first, pivot));
-
-	while (first < last && !comp(*--last, pivot));
-
+    while (first < last && !comp(*--last, pivot));
     if (first < last) // Is [first, last) already partitioned?
     {
         std::iter_swap(first, last); // Swap first pair we find above.
         ++first;
         RandomAccessIterator lm1 = last;
         --lm1;
-
         // 'last' is not inclusive in [first, last). From now on, it uses last minus one
         // to be inclusive both side.
         uint64_t left_bitset  = 0;
         uint64_t right_bitset = 0;
-
         while (lm1 - first >= 2 * BLOCK_SIZE - 1)
         {
             // Record the comparison outcomes for the elements currently on the left side.
@@ -449,11 +440,9 @@ find_existing_run(RandomAccessIterator first,
 {
     if (last - first < 2) // 0 or 1 element is sorted
         return std::pair<RandomAccessIterator, bool>(last, false);
-
     RandomAccessIterator mid = first;
     bool is_strictly_descending = comp(*++mid, *first);
     ++mid;
-
     if (is_strictly_descending)
         while (mid != last && comp(*mid, *prev_iter(mid)))
             ++mid;
