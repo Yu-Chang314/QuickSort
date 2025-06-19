@@ -446,7 +446,7 @@ find_existing_run(RandomAccessIterator first,
             ++mid;
     else
         while (mid != last && !comp(*mid, *prev_iter(mid)))
-			++mid;
+            ++mid;
     return std::pair<RandomAccessIterator, bool>(mid, is_strictly_descending);
 }
 
