@@ -204,26 +204,26 @@ insertion_sort(BidirectionalIterator first,
                BidirectionalIterator last,
                Compare& comp)
 {
-	if (first != last)
-	{
-		for (BidirectionalIterator mid = first; ++mid != last;)
-		{
-			BidirectionalIterator hole = mid;
-			typename std::iterator_traits<BidirectionalIterator>::value_type
-			val(std::move(*mid));
-			if (comp(val, *first)) // found new earliest element, move to front
-			{
+    if (first != last)
+    {
+        for (BidirectionalIterator mid = first; ++mid != last;)
+        {
+            BidirectionalIterator hole = mid;
+            typename std::iterator_traits<BidirectionalIterator>::value_type
+            val(std::move(*mid));
+            if (comp(val, *first)) // found new earliest element, move to front
+            {
 				std::move_backward(first, mid, ++hole);
 				*first = std::move(val);
-			}
-			else // look for insertion point after first
-			{
-				for (BidirectionalIterator sift = hole; comp(val, *--sift); hole = sift)
-					*hole = std::move(*sift); // move hole down
-				*hole = std::move(val);
-			}
-		}
-	}
+            }
+            else // look for insertion point after first
+            {
+                for (BidirectionalIterator sift = hole; comp(val, *--sift); hole = sift)
+                    *hole = std::move(*sift); // move hole down
+                *hole = std::move(val);
+            }
+        }
+    }
 }
 
 template <class Compare,
@@ -472,44 +472,44 @@ sort4_stable(RandomAccessIterator first,
              Compare& comp)
 {
     typedef typename std::iterator_traits<RandomAccessIterator>::difference_type difference_type;
-	RandomAccessIterator a = first;
-	RandomAccessIterator b = first;
-	RandomAccessIterator c = first + difference_type(2);
-	RandomAccessIterator d = c;
-	bool comp1 = comp(*next_iter(first), *first);
-	bool comp2 = comp(*next_iter(c), *c);
+    RandomAccessIterator a = first;
+    RandomAccessIterator b = first;
+    RandomAccessIterator c = first + difference_type(2);
+    RandomAccessIterator d = c;
+    bool comp1 = comp(*next_iter(first), *first);
+    bool comp2 = comp(*next_iter(c), *c);
 
     // create a <= b and c <= d
     a += difference_type(comp1);
-	b += difference_type(!comp1);
-	c += difference_type(comp2);
-	d += difference_type(!comp2);
+    b += difference_type(!comp1);
+    c += difference_type(comp2);
+    d += difference_type(!comp2);
 
-	// Compare(a, c) and (b, d) to identify max / min.We're left with two
-	// unknown elements, but because we are a stable sort we must know which
-	// one is leftmost and which one is rightmost.
-	// c3, c4 | min max unknown_left unknown_right
-	//  0,  0 |  a   d      b          c
-	//  0,  1 |  a   b      c          d
-	//  1,  0 |  c   d      a          b
-	//  1,  1 |  c   b      a          d
-	bool comp3 = comp(*c, *a);
-	bool comp4 = comp(*d, *b);
-	RandomAccessIterator mn = select(comp3, c, a);
-	RandomAccessIterator mx = select(comp4, b, d);
-	RandomAccessIterator unknown_left  = select(comp3, a, select(comp4, c, b));
-	RandomAccessIterator unknown_right = select(comp4, d, select(comp3, b, c));
+    // Compare(a, c) and (b, d) to identify max / min.We're left with two
+    // unknown elements, but because we are a stable sort we must know which
+    // one is leftmost and which one is rightmost.
+    // c3, c4 | min max unknown_left unknown_right
+    //  0,  0 |  a   d      b          c
+    //  0,  1 |  a   b      c          d
+    //  1,  0 |  c   d      a          b
+    //  1,  1 |  c   b      a          d
+    bool comp3 = comp(*c, *a);
+    bool comp4 = comp(*d, *b);
+    RandomAccessIterator mn = select(comp3, c, a);
+    RandomAccessIterator mx = select(comp4, b, d);
+    RandomAccessIterator unknown_left  = select(comp3, a, select(comp4, c, b));
+    RandomAccessIterator unknown_right = select(comp4, d, select(comp3, b, c));
 
-	// sort the last two elements
-	bool comp5 = comp(*unknown_right, *unknown_left);
-	RandomAccessIterator lo = select(comp5, unknown_right, unknown_left);
-	RandomAccessIterator hi = select(comp5, unknown_left, unknown_right);
+    // sort the last two elements
+    bool comp5 = comp(*unknown_right, *unknown_left);
+    RandomAccessIterator lo = select(comp5, unknown_right, unknown_left);
+    RandomAccessIterator hi = select(comp5, unknown_left, unknown_right);
 
-	// always moves each element exactly once
-	std::construct_at(dst, std::move(*mn)); ++dst;
-	std::construct_at(dst, std::move(*lo)); ++dst;
-	std::construct_at(dst, std::move(*hi)); ++dst;
-	std::construct_at(dst, std::move(*mx));
+    // always moves each element exactly once
+    std::construct_at(dst, std::move(*mn)); ++dst;
+    std::construct_at(dst, std::move(*lo)); ++dst;
+    std::construct_at(dst, std::move(*hi)); ++dst;
+    std::construct_at(dst, std::move(*mx));
 }
 
 template <class Compare,
@@ -521,10 +521,10 @@ sort8_stable(RandomAccessIterator first,
              ValueType* dst,
              Compare& comp)
 {
-	sort4_stable(first, scratch_base, comp);
-	sort4_stable(first + 4, scratch_base + 4, comp);
+    sort4_stable(first, scratch_base, comp);
+    sort4_stable(first + 4, scratch_base + 4, comp);
     // scratch_base[0...8] is now initialized, allowing us to merge back to dst
-	merge_move(scratch_base, scratch_base + 4, scratch_base + 8, dst, comp);
+    merge_move(scratch_base, scratch_base + 4, scratch_base + 8, dst, comp);
 }
 
 template <class Compare,
