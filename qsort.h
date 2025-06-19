@@ -123,21 +123,21 @@ hoare_branchy_cyclic(RandomAccessIterator first,
 	while (first != last && !comp(*--last, pivot));
 
 	if (first < last)
-    {
-        value_type tmp(std::move(*first));
-        do
-        {
-            *first = std::move(*last);
-            // always safe here, but need to find the correct position for tmp
-            while (comp(*++first, pivot) && first < last);
-            if (!(first < last))
-                break;
-            *last = std::move(*first);
-            // safe because last will eventually be overwritten
-            while (!comp(*--last, pivot));
-        } while (first < last);
-        *first = std::move(tmp);
-    }
+	{
+        	value_type tmp(std::move(*first));
+       		 do
+       		 {
+           		 *first = std::move(*last);
+            		// always safe here, but need to find the correct position for tmp
+           		 while (comp(*++first, pivot) && first < last);
+            		if (!(first < last))
+                		break;
+           		 *last = std::move(*first);
+            		// safe because last will eventually be overwritten
+            		while (!comp(*--last, pivot));
+        	} while (first < last);
+       		 *first = std::move(tmp);
+	}
 	*begin = std::move(*--first);
 	*first = std::move(pivot);
 	return first;
