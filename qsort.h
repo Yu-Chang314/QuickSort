@@ -59,15 +59,14 @@ median_of_three(RandomAccessIterator a,
 
 	bool x = comp(*a, *b);
 	bool y = comp(*a, *c);
-
 	// If x=y=0 then b, c <= a. In this case we want to return max(b, c).
-    // If x=y=1 then a < b, c. In this case we want to return min(b, c).
-    // By toggling the outcome of b < c using XOR x we get this behavior.
+	// If x=y=1 then a < b, c. In this case we want to return min(b, c).
+    	// By toggling the outcome of b < c using XOR x we get this behavior.
 	if (x == y)
-    {
-        bool z = comp(*b, *c);
-        return (z ^ x) ? c : b;
-    }
+	{
+        	bool z = comp(*b, *c);
+        	return (z ^ x) ? c : b;
+    	}
 	return a;
 }
 
