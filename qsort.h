@@ -491,9 +491,9 @@ qsort(const RandomAccessIterator first,
 
     if (mid == last) // strictly ascending ==> no operation
     {
-		if (descending) // strictly descending ==> reverse
-			std::reverse(first, last);
-		return;
+        if (descending) // strictly descending ==> reverse
+            std::reverse(first, last);
+        return;
     }
 	else if (mid - first >= last - mid) // first half are sorted, sort last half and merge them
     {
