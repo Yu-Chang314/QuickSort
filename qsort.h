@@ -495,7 +495,7 @@ qsort(const RandomAccessIterator first,
             std::reverse(first, last);
         return;
     }
-	else if (mid - first >= last - mid) // first half are sorted, sort last half and merge them
+    else if (mid - first >= last - mid) // first half are sorted, sort last half and merge them
     {
         if (descending)
             std::reverse(first, mid);
