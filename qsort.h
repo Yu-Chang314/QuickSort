@@ -103,7 +103,7 @@ choose_pivot(RandomAccessIterator first,
     RandomAccessIterator mid = len < PSEUDO_MEDIAN_REC_THRESHOLD
         ? median_of_three(first, first + (step << 2), first + step * 7, comp)
         : median_of_three_recursive(first, first + (step << 2), first + step * 7, comp, step);
-        std::iter_swap(first, mid);
+    std::iter_swap(first, mid);
 }
 
 template <class Compare,
@@ -116,10 +116,8 @@ hoare_branchy_cyclic(RandomAccessIterator first,
     typedef typename std::iterator_traits<RandomAccessIterator>::value_type value_type;
     value_type pivot(std::move(*first));
     RandomAccessIterator begin = first;
-
     while (++first != last && comp(*first, pivot));
     while (first != last && !comp(*--last, pivot));
-
     if (first < last)
     {
         value_type tmp(std::move(*first));
@@ -136,9 +134,9 @@ hoare_branchy_cyclic(RandomAccessIterator first,
         } while (first < last);
         *first = std::move(tmp);
     }
-	*begin = std::move(*--first);
-	*first = std::move(pivot);
-	return first;
+    *begin = std::move(*--first);
+    *first = std::move(pivot);
+    return first;
 }
 
 template <class RandomAccessIterator>
