@@ -49,7 +49,6 @@ template <class Iter,
           class Tp = typename std::iterator_traits<Iter>::value_type>
 constexpr bool use_branchless_sort = std::is_trivially_copyable<Tp>::value &&
                                      std::is_arithmetic<Tp>::value &&
-                                     sizeof(Tp) * SSORT_MAX <= MAX_STACK_SIZE &&
                                      is_simple_comparator<typename std::remove_cvref<Compare>::type>::value;
 
 template <class Iter,
