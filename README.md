@@ -19,7 +19,7 @@ Two partitioning strategies are used:
 
 ### Pivot Selection
 
-Recursive median selection using √N sampling, based on [glidesort](https://github.com/orlp/glidesort) by Orson Peters.
+- Recursive median selection using √N sampling, based on [glidesort](https://github.com/orlp/glidesort) by Orson Peters.
 
 ### Small Sort  
 #### Trivial types:  
