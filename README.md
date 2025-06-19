@@ -27,12 +27,12 @@ Recursive median selection using √N sampling, based on [glidesort](https://git
  - For N <= 8,  use a sorting networks with conditional moves.   
  - For N > 8 and N <= 32, use Bitonic Order Merge Sort for faster sorting.
 
- #### Nontrivial and median-sized types:
+#### Nontrivial and median-sized types:
 
 - Use a stable sorting network combined with insertion sort.
 - The implementation in [small_sort_general](https://github.com/Voultapher/sort-research-rs/tree/main/ipnsort) is adapted from ipnsort,  
 designed for nontrivial types that still fit comfortably in stack-allocated scratch space.
 
-### Large or complex types:
+#### Large or complex types:
 - If the type is too large for stack allocation, fallback to insertion sort.
 
