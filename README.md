@@ -15,7 +15,7 @@
 Two partitioning strategies are used:
 
 - A [bitsetpartition](https://github.com/minjaehwang/bitsetsort) for arithmetic types.  
-- A branchy Hoare-style partition for large or expensive-to-move types.  
+- A branchy ~Hoare-style partition~ [fulcrum_partition](https://github.com/scandum/crumsort?tab=readme-ov-file) for large or expensive-to-move types.  
 
 ### Pivot Selection
 
