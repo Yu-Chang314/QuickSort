@@ -430,7 +430,7 @@ small_sort_network(RandomAccessIterator first,
 template <class Compare,
           class InputIterator,
           class OutputIterator>
-OutputIterator
+CONSTEXPR_CPP20 OutputIterator
 merge_move(InputIterator first,
            const InputIterator mid,
            const InputIterator last,
