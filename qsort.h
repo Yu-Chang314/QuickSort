@@ -109,34 +109,48 @@ choose_pivot(RandomAccessIterator first,
 template <class Compare,
           class RandomAccessIterator>
 CONSTEXPR_CPP20 RandomAccessIterator
-hoare_branchy_cyclic(RandomAccessIterator first,
-                     RandomAccessIterator last,
-                     Compare& comp)
+fulcrum_partition(RandomAccessIterator first,
+                  RandomAccessIterator last,
+                  Compare& comp)
 {
-    typedef typename std::iterator_traits<RandomAccessIterator>::value_type value_type;
-    value_type pivot(std::move(*first));
-    RandomAccessIterator begin = first;
-    while (++first != last && comp(*first, pivot));
-    while (first != last && !comp(*--last, pivot));
-    if (first < last)
+	typedef typename std::iterator_traits<RandomAccessIterator>::value_type value_type;
+	value_type pivot(std::move(*first));
+	--last;
+    for (;;)
     {
-        value_type tmp(std::move(*first));
-        do
+        if (!comp(*last, pivot))
         {
-            *first = std::move(*last);
-            // always safe here, but need to find the correct position for tmp
-            while (comp(*++first, pivot) && first < last);
+            --last;
+            continue;
+        }
+
+        if (!(first < last))
+        {
+            *first = std::move(pivot);
+            return first;
+        }
+
+        *first = std::move(*last);
+        ++first;
+
+        for (;;)
+        {
             if (!(first < last))
-                break;
+            {
+                *first = std::move(pivot);
+                return first;
+            }
+
+            if (comp(*first, pivot))
+            {
+                ++first;
+                continue;
+            }
             *last = std::move(*first);
-            // safe because last will eventually be overwritten
-            while (!comp(*--last, pivot));
-        } while (first < last);
-        *first = std::move(tmp);
+            --last;
+            break;
+        }
     }
-    *begin = std::move(*--first);
-    *first = std::move(pivot);
-    return first;
 }
 
 template <class RandomAccessIterator>
@@ -362,7 +376,7 @@ partition_by_choosed_pivot(RandomAccessIterator first,
     if constexpr (use_branchless_sort<RandomAccessIterator, Compare>)
         return bitset_partition(first, last, comp);
     else
-        return hoare_branchy_cyclic(first, last, comp);
+        return fulcrum_partition(first, last, comp);
 }
 
 template <class Compare>
