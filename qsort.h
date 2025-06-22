@@ -113,9 +113,9 @@ fulcrum_partition(RandomAccessIterator first,
                   RandomAccessIterator last,
                   Compare& comp)
 {
-	typedef typename std::iterator_traits<RandomAccessIterator>::value_type value_type;
-	value_type pivot(std::move(*first));
-	--last;
+    typedef typename std::iterator_traits<RandomAccessIterator>::value_type value_type;
+    value_type pivot(std::move(*first));
+    --last;
     for (;;)
     {
         if (!comp(*last, pivot))
